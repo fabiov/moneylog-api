@@ -8,7 +8,7 @@ RUN apt-get update; \
 
 RUN set -eux; \
 	docker-php-ext-configure zip --with-libzip; \
-	docker-php-ext-install -j$(nproc) intl zip bcmath;
+	docker-php-ext-install -j$(nproc) intl zip bcmath;git com	
 
 RUN set -eux; \
 	pecl install apcu-5.1.17 xdebug; \

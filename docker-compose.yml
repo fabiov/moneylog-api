@@ -19,13 +19,14 @@ services:
         image: nginx:1.15-alpine
         depends_on:
             - php
+        volumes:
+            # Comment out the next line in production
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+            - ./public:/srv/api/public:ro
+        ports:
+            - '8082:8082'
         networks:
             - moneylog-api
-        ports:
-            - 8082:8082
-        volumes:
-            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
-            - ./public:/var/www/moneylog-api/public:ro
     php:
         build:
             context: .
@@ -36,15 +37,15 @@ services:
             - redis
         environment:
             APP_ENV: dev
-            PHP_IDE_CONFIG: 'serverName=ANDA'
+            PHP_IDE_CONFIG: 'serverName=moneylog'
             PHP_XDEBUG_ENABLED: 1 # Set 1 to enable.
-            XDEBUG_CONFIG: remote_host=10.1.70.179
+            XDEBUG_CONFIG: remote_host=10.1.70.231
         expose:
-            - 9000
+          - 9000
         networks:
             - moneylog-api
         volumes:
-            - ./:/var/www/moneylog-api:rw,cached
+            - ./:/srv/api:rw,cached
     redis:
         image: redis:4-alpine
         networks:

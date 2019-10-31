@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# aggiungo la risoluzione del b2c di kira in produzione per fare le sync
+echo "195.96.216.35 edenviaggi-ng.kiraviaggi.it" >> /etc/hosts
+
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
@@ -16,13 +20,13 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
     if [ -f composer.lock ]; then
         echo "entrypoint - composer"
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction
-		>&2 echo "Waiting for Postgres to be ready..."
-		until pg_isready --timeout=0 --dbname="${DATABASE_URL}"; do
-			sleep 1
-		done
-		bin/console doctrine:cache:clear-metadata
-		bin/console doctrine:cache:clear-query
-		bin/console doctrine:cache:clear-result
+#		>&2 echo "Waiting for Postgres to be ready..."
+#		until pg_isready --timeout=0 --dbname="${DATABASE_URL}"; do
+#			sleep 1
+#		done
+#		bin/console doctrine:cache:clear-metadata
+#		bin/console doctrine:cache:clear-query
+#		bin/console doctrine:cache:clear-result
 #		bin/console doctrine:migrations:migrate --no-interaction
 #		bin/console doctrine:fixtures:load -n
 	fi

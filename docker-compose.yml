@@ -1,24 +1,7 @@
 version: '3.7'
-
+networks:
+    moneylog-api: {}
 services:
-    php:
-        build:
-          context: .
-          dockerfile: docker/php/Dockerfile
-        depends_on:
-            - db
-            - redis
-        expose:
-            - 9000
-        environment:
-            PHP_XDEBUG_ENABLED: 1 # Set 1 to enable.
-            XDEBUG_CONFIG: remote_host=10.1.70.179
-            PHP_IDE_CONFIG: 'serverName=ANDA'
-            DATABASE_URL: postgres://anda:anda@db/anda
-            APP_ENV: dev
-        volumes:
-            - ./:/var/www/moneylog-api:rw,cached
-            - ./var:/var/www/moneylog-api/var:rw
     db:
         image: mysql:5.7
         environment:
@@ -28,18 +11,43 @@ services:
             MYSQL_ROOT_PASSWORD: password
         expose:
             - 3306
+        networks:
+            - moneylog-api
         volumes:
             - db-data:/var/lib/mysql-data-moneylog-api
-    redis:
-        image: redis:4-alpine
     nginx:
         image: nginx:1.15-alpine
         depends_on:
             - php
-        volumes:
-            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
-            - ./web:/var/www/moneylog-api/web:ro
+        networks:
+            - moneylog-api
         ports:
             - 8082:8082
+        volumes:
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+            - ./public:/var/www/moneylog-api/public:ro
+    php:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+            target: api_php
+        depends_on:
+            - db
+            - redis
+        environment:
+            APP_ENV: dev
+            PHP_IDE_CONFIG: 'serverName=ANDA'
+            PHP_XDEBUG_ENABLED: 1 # Set 1 to enable.
+            XDEBUG_CONFIG: remote_host=10.1.70.179
+        expose:
+            - 9000
+        networks:
+            - moneylog-api
+        volumes:
+            - ./:/var/www/moneylog-api:rw,cached
+    redis:
+        image: redis:4-alpine
+        networks:
+            - moneylog-api
 volumes:
     db-data: {}

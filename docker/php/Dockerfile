@@ -1,4 +1,6 @@
-FROM php:7.2-fpm
+ARG PHP_VERSION=7.2
+
+FROM php:${PHP_VERSION}-fpm AS api_php
 
 # persistent / runtime deps
 RUN apt-get update; \
@@ -7,8 +9,7 @@ RUN apt-get update; \
 	apt-get install -y acl file gettext git libzip-dev rsync;
 
 RUN set -eux; \
-	docker-php-ext-configure zip --with-libzip; \
-	docker-php-ext-install -j$(nproc) intl zip bcmath;git com	
+	docker-php-ext-install zip;
 
 RUN set -eux; \
 	pecl install apcu-5.1.17 xdebug; \

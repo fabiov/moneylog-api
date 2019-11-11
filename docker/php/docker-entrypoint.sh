@@ -1,10 +1,6 @@
 #!/bin/sh
 set -e
 
-# aggiungo la risoluzione del b2c di kira in produzione per fare le sync
-echo "195.96.216.35 edenviaggi-ng.kiraviaggi.it" >> /etc/hosts
-
-
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"

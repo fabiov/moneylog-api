@@ -13,11 +13,7 @@ RUN set -eux; \
 		xdebug \
 	; \
 	pecl clear-cache; \
-	docker-php-ext-enable \
-		apcu \
-		opcache \
-		xdebug \
-	; \
+	docker-php-ext-enable apcu opcache xdebug; \
 #	echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
 #	; \
     echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \

@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ApiResource()
+ * @see https://api-platform.com/docs/core/operations/#enabling-and-disabling-operations
+ *
+ * @ApiResource(collectionOperations={"post"},itemOperations={"get"})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */
@@ -96,14 +98,12 @@ class User implements UserInterface
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
         return $this;
     }
 
@@ -118,7 +118,6 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 

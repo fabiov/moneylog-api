@@ -9,7 +9,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @see https://api-platform.com/docs/core/operations/#enabling-and-disabling-operations
  *
- * @ApiResource(collectionOperations={"post"}, itemOperations={"get", "put"})
+ * @ApiResource(
+ *     collectionOperations={"post"={"method"="POST", "route_name"="api_users_post"}},
+ *     itemOperations={"get", "put"={"method"="PUT", "route_name"="api_users_put"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks
  */

@@ -11,7 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ApiResource(
  *     collectionOperations={"post"={"method"="POST", "route_name"="api_users_post"}},
- *     itemOperations={"get", "put"={"method"="PUT", "route_name"="api_users_put"}}
+ *     itemOperations={
+ *      "get"={"method"="GET", "route_name"="api_users_get"}, "put"={"method"="PUT", "route_name"="api_users_put"}
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks

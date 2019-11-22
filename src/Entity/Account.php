@@ -6,7 +6,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_USER')"},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="user_account_idx", columns={"user_id", "name"})})
  */

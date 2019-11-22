@@ -60,10 +60,17 @@ class UsersTest extends ApiTestCase
                 'surname' => 'Rossi Martini',
             ]]);
         $modifyData = json_decode($modifyResponse->getContent(), true);
-
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertEquals('Mario Filippo', $modifyData['name']);
         $this->assertEquals('Rossi Martini', $modifyData['surname']);
+
+        // MODIFY USER DATA FOR DIFFERENT USER IS FORBIDDEN
+        $modifyResponse = static::createClient([], ['headers' => ['Authorization' => "Bearer $token"]])
+            ->request(Request::METHOD_PUT, '/api/users/1', ['json' => [
+                'name'    => 'Mario Filippo',
+                'surname' => 'Rossi Martini',
+            ]]);
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
 
         // USER CAN NOT BE DELETED
         static::createClient()->request(Request::METHOD_DELETE, "/api/users/$userId");

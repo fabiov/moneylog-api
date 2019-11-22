@@ -21,7 +21,7 @@ class UsersTest extends ApiTestCase
             ->request(Request::METHOD_POST, '/api/users', ['json' => [
                 'name'      => 'Mario',
                 'surname'   => 'Rossi',
-                'email'     => 'mario.rossi@mailinator.com',
+                'email'     => 'test@mailinator.com',
                 'password'  => 'myPassword',
             ]]);
         $data = json_decode($response->getContent(), true);
@@ -29,7 +29,7 @@ class UsersTest extends ApiTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
         $this->assertResponseHeaderSame('content-type', 'application/json; charset=utf-8');
-        $this->assertEquals("mario.rossi@mailinator.com", $data["email"]);
+        $this->assertEquals("test@mailinator.com", $data["email"]);
         $this->assertEquals("Mario",$data["name"]);
         $this->assertEquals("Rossi",$data["surname"]);
         $this->assertNull($data["lastLogin"]);
@@ -38,8 +38,7 @@ class UsersTest extends ApiTestCase
         // try authentication with wrong password
         static::createClient([], ['headers' => ['ACCEPT' => 'application/json']])
             ->request(Request::METHOD_POST, '/authentication_token', ['json' => [
-                'email'     => 'mario.rossi@mailinator.com',
-                'password'  => 'wrongPassword',
+                'email' => 'test@mailinator.com', 'password'  => 'wrongPassword'
             ]]);
         $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
         $this->assertJsonEquals('{"code": 401,"message": "Bad credentials."}');
@@ -47,8 +46,7 @@ class UsersTest extends ApiTestCase
         // check if created user can be authenticated
         $response = static::createClient([], ['headers' => ['ACCEPT' => 'application/json']])
             ->request(Request::METHOD_POST, '/authentication_token', ['json' => [
-                'email'     => 'mario.rossi@mailinator.com',
-                'password'  => 'myPassword',
+                'email' => 'test@mailinator.com', 'password'  => 'myPassword'
             ]]);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
@@ -56,7 +54,7 @@ class UsersTest extends ApiTestCase
         $token  = $tokenData['token'];
 
         // MODIFY USER DATA
-        $modifyResponse = static::createClient([], ['headers' => ['ACCEPT' => 'application/json', 'Authorization' => "Bearer $token"]])
+        $modifyResponse = static::createClient([], ['headers' => ['Authorization' => "Bearer $token"]])
             ->request(Request::METHOD_PUT, "/api/users/$userId", ['json' => [
                 'name'    => 'Mario Filippo',
                 'surname' => 'Rossi Martini',

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @see https://symfonycasts.com/screencast/api-platform-security/entity-listener#how-to-automatically-set-the-field
+ */
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;

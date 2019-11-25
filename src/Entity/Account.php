@@ -7,10 +7,13 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *     attributes={"security"="is_granted('ROLE_USER')"},
+ *     denormalizationContext={"groups"={"write"}},
+ *     normalizationContext={"groups"={"read"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  * @ORM\EntityListeners({"App\Doctrine\AccountSetOwnerListener"})
@@ -32,11 +35,13 @@ class Account
     private $user;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\Column(type="boolean")
      */
     private $recap;

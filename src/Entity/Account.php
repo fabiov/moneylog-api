@@ -1,6 +1,7 @@
 <?php
 /**
- * @see https://symfonycasts.com/screencast/api-platform-security/entity-listener#how-to-automatically-set-the-field
+ * @see https://symfonycasts.com/screencast/api-platform-security/acl-cheese-owner
+ * @see https://symfonycasts.com/screencast/api-platform-security/entity-listener#event-listener-vs-entity-listener
  */
 namespace App\Entity;
 
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     attributes={"security"="is_granted('ROLE_USER')"},
  * )
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
+ * @ORM\EntityListeners({"App\Doctrine\AccountSetOwnerListener"})
  * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="user_account_idx", columns={"user_id", "name"})})
  */
 class Account

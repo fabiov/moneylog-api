@@ -1,11 +1,12 @@
 <?php
 /**
- * @see https://symfonycasts.com/screencast/api-platform-security/acl-cheese-owner
- * @see https://symfonycasts.com/screencast/api-platform-security/entity-listener#event-listener-vs-entity-listener
+ * @see 35 https://symfonycasts.com/screencast/api-platform-security/validator-logic
+ * @see 36 https://symfonycasts.com/screencast/api-platform-security/entity-listener
  */
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Validator\IsValidOwner;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -29,8 +30,9 @@ class Account
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @IsValidOwner()
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
     private $user;
 

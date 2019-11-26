@@ -20,15 +20,10 @@ class AccountsTest extends CustomApiTestCase {
         $authenticatedClient->request(Request::METHOD_POST, '/api/accounts', ['json' => $accountData]);
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
-//        $client->request(Request::METHOD_POST, '/api/accounts', [
-//            'json' => $accountData + ['user' => '/api/users/' . $otherUser->getId()],
+//        $response = $client->request(Request::METHOD_POST, '/api/accounts', [
+//            'json' => ['name' => 'test wrong user', 'recap' => true, 'user' => '/api/users/' . $otherUser->getId()],
 //        ]);
-//        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST, 'Not passing the correct owner');
-
-//        $client->request(Request::METHOD_POST, '/api/accounts', [
-//            'json' => $accountData + ['owner' => '/api/users/' . $authenticatedUser->getId()],
-//        ]);
-//        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
+//        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
     }
 
 //    public function testUpdateCheeseListing()

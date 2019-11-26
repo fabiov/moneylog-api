@@ -1,6 +1,7 @@
 <?php
 namespace App\Tests;
 
+use App\Entity\Account;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,43 +13,44 @@ class AccountsTest extends CustomApiTestCase {
         $client->request(Request::METHOD_POST, '/api/accounts', ['json' => []]);
         $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
 
-        $authenticatedUser   = $this->createUser('account.please@test.com', 'foo');
-        $otherUser           = $this->createUser('other.user@test.com', 'foo');
-        $authenticatedClient = $this->getauthenticatedClient('account.please@test.com', 'foo');
+        $mainUser         = $this->createUser('account.please@test.com', 'foo');
+        $otherUser        = $this->createUser('other.user@test.com', 'foo');
+        $authorizedClient = $this->createAuthenticatedClient('account.please@test.com', 'foo');
 
         $accountData = ['name' => 'test current account', 'recap' => true];
-        $authenticatedClient->request(Request::METHOD_POST, '/api/accounts', ['json' => $accountData]);
+        $authorizedClient->request(Request::METHOD_POST, '/api/accounts', ['json' => $accountData]);
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
-//        $response = $client->request(Request::METHOD_POST, '/api/accounts', [
-//            'json' => ['name' => 'test wrong user', 'recap' => true, 'user' => '/api/users/' . $otherUser->getId()],
-//        ]);
-//        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+        $data = ['name' => 'test wrong user', 'recap' => true, 'user' => '/api/users/' . $otherUser->getId()];
+        $authorizedClient->request(Request::METHOD_POST, '/api/accounts', ['json' => $data]);
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
+
+        $listResponse = $authorizedClient->request(Request::METHOD_GET, '/api/accounts', ['json' => []]);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $listData = json_decode($listResponse->getContent(), true);
+        $this->assertEquals(2, $listData['hydra:totalItems']);
     }
 
-//    public function testUpdateCheeseListing()
-//    {
-//        $client = self::createClient();
-//        $user1 = $this->createUser('user1@example.com', 'foo');
-//        $user2 = $this->createUser('user2@example.com', 'foo');
-//        $cheeseListing = new CheeseListing('Block of cheddar');
-//        $cheeseListing->setOwner($user1);
-//        $cheeseListing->setPrice(1000);
-//        $cheeseListing->setDescription('mmmm');
-//        $em = $this->getEntityManager();
-//        $em->persist($cheeseListing);
-//        $em->flush();
-//        $this->logIn($client, 'user2@example.com', 'foo');
-//        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+    public function testUpdateAccount()
+    {
+        $account = new Account();
+        $account->setUser($this->otherUser);
+        $account->setRecap(true);
+        $account->setName('test update other user');
+        $em = self::$container->get('doctrine')->getManager();
+        $em->persist($account);
+        $em->flush();
+
+        // un utente non può modificare un account di un altro utente
+//        $this->authorizedClient->request('PUT', '/api/cheeses/' . $account->getId(), [
 //            // try to trick security by reassigning to this user
-//            'json' => ['title' => 'updated', 'owner' => '/api/users/'.$user2->getId()]
+//            'json' => ['name' => 'test update other user updated', 'owner' => '/api/users/' . $this->otherUser->getId()]
 //        ]);
-//        $this->assertResponseStatusCodeSame(403, 'only author can updated');
+//        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN, 'only author can updated');
 //        $this->logIn($client, 'user1@example.com', 'foo');
 //        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
 //            'json' => ['title' => 'updated']
 //        ]);
 //        $this->assertResponseStatusCodeSame(200);
-//    }
-
+    }
 }

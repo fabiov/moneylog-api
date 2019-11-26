@@ -22,7 +22,7 @@ class CustomApiTestCase extends ApiTestCase
         return $user;
     }
 
-    protected function getAuthenticatedClient(string $email, string $password)
+    protected function createAuthenticatedClient(string $email, string $password)
     {
         $response = static::createClient([], ['headers' => ['ACCEPT' => 'application/json']])
             ->request(Request::METHOD_POST, '/authentication_token', ['json' => [
@@ -36,6 +36,6 @@ class CustomApiTestCase extends ApiTestCase
     protected function createUserAndGetAuthenticatedClient(string $email, string $password)
     {
         $this->createUser($email, $password);
-        return $this->getAuthenticatedClient($email, $password);
+        return self::createAuthenticatedClient($email, $password);
     }
 }

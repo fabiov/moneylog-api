@@ -8,10 +8,7 @@ RUN apt-get install -y git net-tools openssh-server supervisor unzip vim acl rsy
 
 ARG APCU_VERSION=5.1.17
 RUN set -eux; \
-	pecl install \
-		apcu-${APCU_VERSION} \
-		xdebug \
-	; \
+	pecl install apcu-${APCU_VERSION} xdebug; \
 	pecl clear-cache; \
 	docker-php-ext-enable apcu opcache xdebug; \
 #	echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \

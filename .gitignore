@@ -1,4 +1,6 @@
 .idea
+docker/db/data
+docker/db/logs
 
 ###> symfony/framework-bundle ###
 .env.*.local

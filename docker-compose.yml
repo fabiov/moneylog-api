@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 networks:
     moneylog-api: {}
 services:
@@ -9,12 +9,13 @@ services:
             MYSQL_USER: user
             MYSQL_PASSWORD: password
             MYSQL_ROOT_PASSWORD: password
-        expose:
-            - 3306
         networks:
-            - moneylog-api
+          - moneylog-api
+        ports:
+            - 3306:3306
         volumes:
-            - db-data:/var/lib/mysql-data-moneylog-api
+            - ./docker/db/data:/var/lib/mysql
+            - ./docker/db/logs:/var/log/mysql
     nginx:
         image: nginx:1.15-alpine
         depends_on:
@@ -50,5 +51,3 @@ services:
         image: redis:4-alpine
         networks:
             - moneylog-api
-volumes:
-    db-data: {}

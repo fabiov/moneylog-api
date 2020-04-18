@@ -208,4 +208,9 @@ class User implements UserInterface
     {
         $this->updated = new \DateTime();
     }
+
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
 }

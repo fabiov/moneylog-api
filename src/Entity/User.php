@@ -4,21 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @see https://api-platform.com/docs/core/operations/#enabling-and-disabling-operations
- *
- * @ApiResource(
- *     collectionOperations={"post"={"method"="POST", "route_name"="api_users_post"}},
- *     itemOperations={
- *      "get"={"method"="GET", "route_name"="api_users_get"}, "put"={"method"="PUT", "route_name"="api_users_put"}
- *     }
- * )
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks
  */
-class User implements UserInterface
+class User
 {
     /**
      * @ORM\Id()
@@ -28,20 +19,9 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -52,21 +32,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $surname;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $lastLogin;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $created;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated;
 
     public function getId(): ?int
     {
@@ -83,64 +48,6 @@ class User implements UserInterface
         $this->email = $email;
 
         return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return (string) $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getSalt()
-    {
-        // not needed when using the "bcrypt" algorithm in security.yaml
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
     public function getName(): ?string
@@ -165,52 +72,5 @@ class User implements UserInterface
         $this->surname = $surname;
 
         return $this;
-    }
-
-    public function getLastLogin(): ?\DateTimeInterface
-    {
-        return $this->lastLogin;
-    }
-
-    public function setLastLogin(?\DateTimeInterface $lastLogin): self
-    {
-        $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
-
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    // Lifecycle
-
-    /**
-     * Gets triggered only on insert
-     * @ORM\PrePersist
-     */
-    public function onPrePersist()
-    {
-        $this->created = new \DateTime();
-    }
-
-    /**
-     * Gets triggered every time on update
-     * @ORM\PreUpdate
-     */
-    public function onPreUpdate()
-    {
-        $this->updated = new \DateTime();
-    }
-
-    public function __toString()
-    {
-        return $this->getEmail();
     }
 }

@@ -20,6 +20,12 @@ class Account
     private $id;
 
     /**
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Account name must be at least {{ limit }} characters long",
+     *      maxMessage = "Account name cannot be longer than {{ limit }} characters"
+     * )
      * @Assert\NotBlank
      * @Assert\NotNull
      * @ORM\Column(type="string", length=255)

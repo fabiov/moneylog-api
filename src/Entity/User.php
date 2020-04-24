@@ -23,12 +23,19 @@ class User
 
     /**
      * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     * @Assert\Length(max = 255, maxMessage = "Your email cannot be longer than {{ limit }} characters")
      * @Assert\NotNull()
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Your name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your name cannot be longer than {{ limit }} characters"
+     * )
      * @Assert\NotBlank()
      * @Assert\NotNull()
      * @ORM\Column(type="string", length=255)
@@ -36,6 +43,12 @@ class User
     private $name;
 
     /**
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "Your surname must be at least {{ limit }} characters long",
+     *      maxMessage = "Your surname cannot be longer than {{ limit }} characters"
+     * )
      * @Assert\NotBlank()
      * @Assert\NotNull()
      * @ORM\Column(type="string", length=255)

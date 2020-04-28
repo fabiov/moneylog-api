@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(collectionOperations={"post"})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User

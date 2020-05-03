@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UsersTest extends ApiTestCase
 {
-    // This trait provided by HautelookAliceBundle will take care of refreshing the database content
-    // to a known state before each test
     use RefreshDatabaseTrait;
 
     public function testCreate(): void

@@ -1,6 +1,11 @@
+DONE
 - CREARE FIXTURE UTENTE E ACCOUNT
 - CREARE TEST USER E ACCOUNT
+DOING
+TO DO
 - AUTENTICAZIONE
+- Quando si crea un Account deve essere automaticamente associato all'user loggato
 _ FILTRARE AUTOMATICAMENTE GLI ACCOUNT PER UTENTE
     https://api-platform.com/docs/core/filters/
+- Un Account può essere modificato silo dal suo User
 

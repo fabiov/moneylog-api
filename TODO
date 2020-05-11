@@ -2,8 +2,8 @@ DONE
 - CREARE FIXTURE UTENTE E ACCOUNT
 - CREARE TEST USER E ACCOUNT
 DOING
+- AUTENTICAZIONE https://api-platform.com/docs/core/jwt/
 TO DO
-- AUTENTICAZIONE
 - Quando si crea un Account deve essere automaticamente associato all'user loggato
 _ FILTRARE AUTOMATICAMENTE GLI ACCOUNT PER UTENTE
     https://api-platform.com/docs/core/filters/

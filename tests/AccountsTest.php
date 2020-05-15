@@ -7,6 +7,12 @@ use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @see https://symfony.com/doc/current/testing/http_authentication.html
+ *
+ * Class AccountsTest
+ * @package App\Tests
+ */
 class AccountsTest extends ApiTestCase
 {
     use RefreshDatabaseTrait;

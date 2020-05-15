@@ -42,7 +42,7 @@ final class SwaggerDecorator implements NormalizerInterface
             'type' => 'object',
             'properties' => [
                 'email'    => ['type' => 'string', 'example' => 'mario.rossi@fixture.it'],
-                'password' => ['type' => 'string', 'example' => 'api'],
+                'password' => ['type' => 'string', 'example' => 'mario123'],
             ],
         ];
 

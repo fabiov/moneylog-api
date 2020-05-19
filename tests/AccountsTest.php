@@ -1,23 +1,23 @@
 <?php
 namespace App\Tests;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\Account;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class AccountsTest extends ApiTestCase
+/**
+ * Class AccountsTest
+ * @package App\Tests
+ */
+class AccountsTest extends AbstractTest
 {
-    use RefreshDatabaseTrait;
-
     public function testCreate(): void
     {
-        self::createClient()->request(Request::METHOD_POST, '/api/accounts', ['json' => [
-            "name" => "Conto corrente",
-            "recap" => true,
-            "user" => "/api/users/1"
-        ]]);
+        $this->authRequest(Request::METHOD_POST, '/api/accounts', [
+            'json'    => ["name" => 'Conto corrente', "recap" => true, "user" => "/api/users/1"]
+        ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
         self::assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -35,7 +35,7 @@ class AccountsTest extends ApiTestCase
 
     public function testGet(): void
     {
-        self::createClient()->request('GET', '/api/accounts/1');
+        $this->authRequest(Request::METHOD_GET, '/api/accounts/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Account",
@@ -51,7 +51,7 @@ class AccountsTest extends ApiTestCase
     public function testGetCollection(): void
     {
         // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
-        self::createClient()->request(Request::METHOD_GET, '/api/accounts');
+        $this->authRequest(Request::METHOD_GET, '/api/accounts');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Account",
@@ -69,9 +69,7 @@ class AccountsTest extends ApiTestCase
 
     public function testUpdate(): void
     {
-        self::createClient()->request(Request::METHOD_PUT, '/api/accounts/1', ['json' => [
-            'name' => 'Conto',
-        ]]);
+        $this->authRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals([
             "@context" => "/api/contexts/Account",
@@ -86,7 +84,7 @@ class AccountsTest extends ApiTestCase
 
     public function testDelete(): void
     {
-        static::createClient()->request(Request::METHOD_DELETE, '/api/accounts/1');
+        $this->authRequest(Request::METHOD_DELETE, '/api/accounts/1');
         self::assertResponseStatusCodeSame(Response::HTTP_METHOD_NOT_ALLOWED);
     }
 }

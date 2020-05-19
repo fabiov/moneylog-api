@@ -173,7 +173,7 @@
         "version": "1.4.2"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.3"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
@@ -210,6 +210,9 @@
     },
     "sebastian/recursion-context": {
         "version": "3.0.0"
+    },
+    "symfony-bundles/json-request-bundle": {
+        "version": "v3.0.0"
     },
     "symfony/asset": {
         "version": "v5.0.7"

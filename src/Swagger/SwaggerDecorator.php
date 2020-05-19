@@ -31,10 +31,7 @@ final class SwaggerDecorator implements NormalizerInterface
         $docs['components']['schemas']['Token'] = [
             'type' => 'object',
             'properties' => [
-                'token' => [
-                    'type' => 'string',
-                    'readOnly' => true,
-                ],
+                'token' => ['type' => 'string', 'readOnly' => true],
             ],
         ];
 
@@ -42,6 +39,16 @@ final class SwaggerDecorator implements NormalizerInterface
             'type' => 'object',
             'properties' => [
                 'email'    => ['type' => 'string', 'example' => 'mario.rossi@fixture.it'],
+                'password' => ['type' => 'string', 'example' => 'mario123'],
+            ],
+        ];
+
+        $docs['components']['schemas']['Registration'] = [
+            'type' => 'object',
+            'properties' => [
+                'name'     => ['type' => 'string', 'example' => 'Mario'],
+                'surname'  => ['type' => 'string', 'example' => 'Rossi'],
+                'email'    => ['type' => 'string', 'example' => 'mario.rossi@example.com'],
                 'password' => ['type' => 'string', 'example' => 'mario123'],
             ],
         ];
@@ -57,9 +64,7 @@ final class SwaggerDecorator implements NormalizerInterface
                             'description' => 'Create new JWT Token',
                             'content' => [
                                 'application/json' => [
-                                    'schema' => [
-                                        '$ref' => '#/components/schemas/Credentials',
-                                    ],
+                                    'schema' => ['$ref' => '#/components/schemas/Credentials'],
                                 ],
                             ],
                         ],
@@ -68,9 +73,34 @@ final class SwaggerDecorator implements NormalizerInterface
                                 'description' => 'Get JWT token',
                                 'content' => [
                                     'application/json' => [
-                                        'schema' => [
-                                            '$ref' => '#/components/schemas/Token',
-                                        ],
+                                        'schema' => ['$ref' => '#/components/schemas/Token'],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+
+
+                '/api/registration/new-user' => [
+                    'post' => [
+                        'tags' => ['Registration'],
+                        'operationId' => 'postRegistrationUser',
+                        'summary' => 'Registration new user.',
+                        'requestBody' => [
+                            'description' => 'Create new user',
+                            'content' => [
+                                'application/json' => [
+                                    'schema' => ['$ref' => '#/components/schemas/Registration'],
+                                ],
+                            ],
+                        ],
+                        'responses' => [
+                            Response::HTTP_OK => [
+                                'description' => 'New registered user',
+                                'content' => [
+                                    'application/json' => [
+                                        'schema' => [/*'$ref' => '#/components/schemas/Token',*/],
                                     ],
                                 ],
                             ],

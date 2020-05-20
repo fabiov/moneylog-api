@@ -36,6 +36,13 @@ class UserFixtures extends Fixture
         $userGiuseppe->setPassword($this->passwordEncoder->encodePassword($userGiuseppe, 'giuseppe'));
         $manager->persist($userGiuseppe);
 
+        $userFabio = (new User())
+            ->setEmail('fabio.ventura@fixture.it')
+            ->setName('Fabio')
+            ->setSurname('Ventura');
+        $userFabio->setPassword($this->passwordEncoder->encodePassword($userFabio, 'Fabio123'));
+        $manager->persist($userFabio);
+
         $manager->flush();
         $this->addReference(self::MARIO_REFERENCE, $userMario);
         $this->addReference(self::GIUSEPPE_REFERENCE, $userGiuseppe);

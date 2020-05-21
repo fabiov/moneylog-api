@@ -34,7 +34,7 @@ class MovementsTest extends AbstractTest
             '@type'         => 'Movement',
             'id'            => 5,
             'date'          => '2020-05-20T00:00:00+00:00',
-            'amount'        => '10.5',
+            'amount'        => '10.50',
             'description'   => 'Spesa',
             'account'       => '/api/accounts/1'
         ]);
@@ -56,7 +56,7 @@ class MovementsTest extends AbstractTest
                     "@type": "Movement",
                     "id": 1,
                     "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "10",
+                    "amount": "10.00",
                     "description": "Shopping",
                     "account": "/api/accounts/1"
                 },
@@ -65,7 +65,7 @@ class MovementsTest extends AbstractTest
                     "@type": "Movement",
                     "id": 2,
                     "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "2",
+                    "amount": "2.00",
                     "description": "Bar",
                     "account": "/api/accounts/2"
                 },
@@ -74,7 +74,7 @@ class MovementsTest extends AbstractTest
                     "@type": "Movement",
                     "id": 3,
                     "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "200",
+                    "amount": "200.00",
                     "description": "Avanzo",
                     "account": "/api/accounts/3"
                 },
@@ -83,7 +83,7 @@ class MovementsTest extends AbstractTest
                     "@type": "Movement",
                     "id": 4,
                     "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "1500",
+                    "amount": "1500.00",
                     "description": "Stipendio",
                     "account": "/api/accounts/4"
                 }
@@ -104,7 +104,7 @@ class MovementsTest extends AbstractTest
             "@type": "Movement",
             "id": 1,
             "date": "2020-05-20T00:00:00+00:00",
-            "amount": "10",
+            "amount": "10.00",
             "description": "Shopping",
             "account": "/api/accounts/1"
         }');
@@ -120,7 +120,7 @@ class MovementsTest extends AbstractTest
             "@type": "Movement",
             "id": 1,
             "date": "2020-05-20T00:00:00+00:00",
-            "amount": "10",
+            "amount": "10.00",
             "description": "Diesel",
             "account": "/api/accounts/1"
         }');

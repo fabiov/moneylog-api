@@ -5,12 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(attributes={"filters"={"movement.date_filter"}})
  * @ApiFilter(DateFilter::class, properties={"date"})
+ * @ApiFilter(RangeFilter::class, properties={"amount"})
  * @ApiFilter(SearchFilter::class, properties={"description": "ipartial"})
  * @ORM\Entity(repositoryClass="App\Repository\MovementRepository")
  */

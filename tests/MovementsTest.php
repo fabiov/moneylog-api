@@ -1,12 +1,9 @@
 <?php
 namespace App\Tests;
 
-use App\Entity\Account;
 use App\Entity\Movement;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * Class MovementsTest
@@ -46,76 +43,7 @@ class MovementsTest extends AbstractTest
         // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
         $this->authRequest(Request::METHOD_GET, '/api/movements');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
-        self::assertJsonEquals('{
-            "@context": "/api/contexts/Movement",
-            "@id": "/api/movements",
-            "@type": "hydra:Collection",
-            "hydra:member": [
-                {
-                    "@id": "/api/movements/1",
-                    "@type": "Movement",
-                    "id": 1,
-                    "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "10.00",
-                    "description": "Shopping",
-                    "account": "/api/accounts/1"
-                },
-                {
-                    "@id": "/api/movements/2",
-                    "@type": "Movement",
-                    "id": 2,
-                    "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "2.00",
-                    "description": "Bar",
-                    "account": "/api/accounts/2"
-                },
-                {
-                    "@id": "/api/movements/3",
-                    "@type": "Movement",
-                    "id": 3,
-                    "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "200.00",
-                    "description": "Avanzo",
-                    "account": "/api/accounts/3"
-                },
-                {
-                    "@id": "/api/movements/4",
-                    "@type": "Movement",
-                    "id": 4,
-                    "date": "2020-05-20T00:00:00+00:00",
-                    "amount": "1500.00",
-                    "description": "Stipendio",
-                    "account": "/api/accounts/4"
-                }
-            ],
-            "hydra:totalItems": 4,
-            "hydra:search": {
-                "@type": "hydra:IriTemplate",
-                "hydra:template": "/api/movements{?date[before],date[strictly_before],date[after],date[strictly_after]}",
-                "hydra:variableRepresentation": "BasicRepresentation",
-                "hydra:mapping": [
-                    {
-                        "@type": "IriTemplateMapping",
-                        "variable": "date[before]",
-                        "property": "date",
-                        "required": false
-                    },
-                    {
-                        "@type": "IriTemplateMapping",
-                        "variable": "date[strictly_before]",
-                        "property": "date",
-                        "required": false
-                    },
-                    {
-                        "@type": "IriTemplateMapping",
-                        "variable": "date[after]",
-                        "property": "date",
-                        "required": false
-                    },
-                    {"@type":"IriTemplateMapping","variable":"date[strictly_after]","property":"date","required":false}
-                ]
-            }
-        }');
+        self::assertJsonEqualsFile(__DIR__ . '/json/movements_collection.json');
     }
 
     // Item operations /////////////////////////////////////////////////////////////////////////////////////////////////

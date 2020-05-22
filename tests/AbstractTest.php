@@ -35,4 +35,13 @@ abstract class AbstractTest extends ApiTestCase
         $options = array_merge_recursive($options, ['headers' => $this->authHeader]);
         return self::createClient()->request($method, $url, $options);
     }
+
+    /**
+     * @param $filename
+     * @param string $message
+     */
+    protected static function assertJsonEqualsFile($filename, $message = ''): void
+    {
+        self::assertJsonEquals(file_get_contents($filename), $message);
+    }
 }

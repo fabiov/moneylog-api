@@ -60,7 +60,7 @@ class MovementsTest extends AbstractTest
             "date": "2020-05-20T00:00:00+00:00",
             "amount": "10.00",
             "description": "Shopping",
-            "account": "/api/accounts/1"
+            "account": "/api/accounts/3"
         }');
     }
 
@@ -76,7 +76,7 @@ class MovementsTest extends AbstractTest
             "date": "2020-05-20T00:00:00+00:00",
             "amount": "10.00",
             "description": "Diesel",
-            "account": "/api/accounts/1"
+            "account": "/api/accounts/3"
         }');
     }
 

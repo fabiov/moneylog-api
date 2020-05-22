@@ -23,9 +23,9 @@ class AccountsTest extends AbstractTest
         self::assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         self::assertJsonEquals('{
             "@context":"/api/contexts/Account",
-            "@id":"/api/accounts/5",
+            "@id":"/api/accounts/7",
             "@type":"Account",
-            "id":5,
+            "id":7,
             "name":"Conto corrente",
             "recap":true,
             "user":"/api/users/1"
@@ -42,9 +42,9 @@ class AccountsTest extends AbstractTest
             "@id": "/api/accounts/1",
             "@type": "Account",
             "id": 1,
-            "name": "Conto corrente",
+            "name": "Banco Popolare",
             "recap": true,
-            "user": "/api/users/2"
+            "user": "/api/users/1"
         }');
     }
 
@@ -58,12 +58,56 @@ class AccountsTest extends AbstractTest
             "@id": "/api/accounts",
             "@type": "hydra:Collection",
             "hydra:member": [
-                {"@id":"/api/accounts/1","@type":"Account","id":1,"name":"Conto corrente","recap":true,"user":"/api/users/2"},
-                {"@id":"/api/accounts/2","@type":"Account","id":2,"name":"Contanti","recap":true,"user":"/api/users/2"},
-                {"@id":"/api/accounts/3","@type":"Account","id":3,"name":"Conto deposito","recap":false,"user":"/api/users/2"},
-                {"@id":"/api/accounts/4","@type":"Account","id":4,"name":"Conto corrente","recap":true,"user":"/api/users/3"}
+                {
+                    "@id": "/api/accounts/1",
+                    "@type": "Account",
+                    "id": 1,
+                    "name": "Banco Popolare",
+                    "recap": true,
+                    "user": "/api/users/1"
+                },
+                {
+                    "@id": "/api/accounts/2",
+                    "@type": "Account",
+                    "id": 2,
+                    "name": "Conto Deposito",
+                    "recap": false,
+                    "user": "/api/users/1"
+                },
+                {
+                    "@id": "/api/accounts/3",
+                    "@type": "Account",
+                    "id": 3,
+                    "name": "Conto corrente",
+                    "recap": true,
+                    "user": "/api/users/2"
+                },
+                {
+                    "@id": "/api/accounts/4",
+                    "@type": "Account",
+                    "id": 4,
+                    "name": "Contanti",
+                    "recap": true,
+                    "user": "/api/users/2"
+                },
+                {
+                    "@id": "/api/accounts/5",
+                    "@type": "Account",
+                    "id": 5,
+                    "name": "Conto deposito",
+                    "recap": false,
+                    "user": "/api/users/2"
+                },
+                {
+                    "@id": "/api/accounts/6",
+                    "@type": "Account",
+                    "id": 6,
+                    "name": "Conto corrente",
+                    "recap": true,
+                    "user": "/api/users/3"
+                }
             ],
-            "hydra:totalItems": 4
+            "hydra:totalItems": 6
         }');
     }
 
@@ -78,7 +122,7 @@ class AccountsTest extends AbstractTest
             "id" => 1,
             "name" => "Conto",
             "recap" => true,
-            "user" => "/api/users/2"
+            "user" => "/api/users/1"
         ]);
     }
 

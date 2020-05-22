@@ -88,7 +88,33 @@ class MovementsTest extends AbstractTest
                     "account": "/api/accounts/4"
                 }
             ],
-            "hydra:totalItems": 4
+            "hydra:totalItems": 4,
+            "hydra:search": {
+                "@type": "hydra:IriTemplate",
+                "hydra:template": "/api/movements{?date[before],date[strictly_before],date[after],date[strictly_after]}",
+                "hydra:variableRepresentation": "BasicRepresentation",
+                "hydra:mapping": [
+                    {
+                        "@type": "IriTemplateMapping",
+                        "variable": "date[before]",
+                        "property": "date",
+                        "required": false
+                    },
+                    {
+                        "@type": "IriTemplateMapping",
+                        "variable": "date[strictly_before]",
+                        "property": "date",
+                        "required": false
+                    },
+                    {
+                        "@type": "IriTemplateMapping",
+                        "variable": "date[after]",
+                        "property": "date",
+                        "required": false
+                    },
+                    {"@type":"IriTemplateMapping","variable":"date[strictly_after]","property":"date","required":false}
+                ]
+            }
         }');
     }
 

@@ -1,0 +1,5 @@
+services:
+    movement.date_filter:
+        parent: 'api_platform.doctrine.orm.date_filter'
+        arguments: [ { date: ~ } ]
+        tags:  [ 'api_platform.filter' ]

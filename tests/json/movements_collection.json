@@ -43,7 +43,7 @@
   "hydra:totalItems": 4,
   "hydra:search": {
     "@type": "hydra:IriTemplate",
-    "hydra:template": "/api/movements{?date[before],date[strictly_before],date[after],date[strictly_after],amount[between],amount[gt],amount[gte],amount[lt],amount[lte],description}",
+    "hydra:template": "/api/movements{?date[before],date[strictly_before],date[after],date[strictly_after],amount[between],amount[gt],amount[gte],amount[lt],amount[lte],account,account[],category,category[],description}",
     "hydra:variableRepresentation": "BasicRepresentation",
     "hydra:mapping": [
       {
@@ -98,6 +98,30 @@
         "@type": "IriTemplateMapping",
         "variable": "amount[lte]",
         "property": "amount",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "account",
+        "property": "account",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "account[]",
+        "property": "account",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "category",
+        "property": "category",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "category[]",
+        "property": "category",
         "required": false
       },
       {

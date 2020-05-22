@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource(attributes={"filters"={"movement.date_filter"}})
  * @ApiFilter(DateFilter::class, properties={"date"})
  * @ApiFilter(RangeFilter::class, properties={"amount"})
- * @ApiFilter(SearchFilter::class, properties={"description": "ipartial"})
+ * @ApiFilter(SearchFilter::class, properties={"account": "exact", "category": "exact", "description": "ipartial"})
  * @ORM\Entity(repositoryClass="App\Repository\MovementRepository")
  */
 class Movement

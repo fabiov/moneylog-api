@@ -23,9 +23,9 @@ class UsersTest extends AbstractTest
             '@id'      => '/api/users/1',
             '@type'    => 'User',
             'id'       => 1,
-            'email'    => 'mario.rossi@fixture.it',
-            'name'     => 'Mario',
-            'surname'  => 'Rossi',
+            'email'    => 'fabio.ventura@fixture.it',
+            'name'     => 'Fabio',
+            'surname'  => 'Ventura',
         ]);
     }
 

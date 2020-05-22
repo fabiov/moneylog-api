@@ -57,7 +57,6 @@ class Movement
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -69,7 +68,6 @@ class Movement
     public function setAmount(string $amount): self
     {
         $this->amount = $amount;
-
         return $this;
     }
 
@@ -81,7 +79,6 @@ class Movement
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -93,7 +90,6 @@ class Movement
     public function setAccount(?Account $account): self
     {
         $this->account = $account;
-
         return $this;
     }
 
@@ -105,7 +101,6 @@ class Movement
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
         return $this;
     }
 }

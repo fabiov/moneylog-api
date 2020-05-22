@@ -52,7 +52,7 @@ class CategoriesTest extends AbstractTest
                     "id": 1,
                     "name": "Home",
                     "enabled": true,
-                    "user": "/api/users/1"
+                    "user": "/api/users/2"
                 },
                 {
                     "@id": "/api/categories/2",
@@ -60,7 +60,7 @@ class CategoriesTest extends AbstractTest
                     "id": 2,
                     "name": "Car",
                     "enabled": true,
-                    "user": "/api/users/2"
+                    "user": "/api/users/3"
                 },
                 {
                     "@id": "/api/categories/3",
@@ -68,7 +68,7 @@ class CategoriesTest extends AbstractTest
                     "id": 3,
                     "name": "Home",
                     "enabled": true,
-                    "user": "/api/users/3"
+                    "user": "/api/users/1"
                 },
                 {
                     "@id": "/api/categories/4",
@@ -76,7 +76,7 @@ class CategoriesTest extends AbstractTest
                     "id": 4,
                     "name": "Car",
                     "enabled": true,
-                    "user": "/api/users/3"
+                    "user": "/api/users/1"
                 },
                 {
                     "@id": "/api/categories/5",
@@ -84,7 +84,7 @@ class CategoriesTest extends AbstractTest
                     "id": 5,
                     "name": "Motorbike",
                     "enabled": false,
-                    "user": "/api/users/3"
+                    "user": "/api/users/1"
                 }
             ],
             "hydra:totalItems": 5
@@ -107,7 +107,7 @@ class CategoriesTest extends AbstractTest
             "id": 1,
             "name": "Home",
             "enabled": true,
-            "user": "/api/users/1"
+            "user": "/api/users/2"
         }');
 
         self::createClient()->request(Request::METHOD_GET, '/api/categories/1');
@@ -125,7 +125,7 @@ class CategoriesTest extends AbstractTest
             "id": 1,
             "name": "Car",
             "enabled": true,
-            "user": "/api/users/1"
+            "user": "/api/users/2"
         }');
 
         self::createClient()->request(Request::METHOD_PUT, '/api/categories/1');

@@ -44,7 +44,7 @@ class AccountsTest extends AbstractTest
             "id": 1,
             "name": "Conto corrente",
             "recap": true,
-            "user": "/api/users/1"
+            "user": "/api/users/2"
         }');
     }
 
@@ -58,10 +58,10 @@ class AccountsTest extends AbstractTest
             "@id": "/api/accounts",
             "@type": "hydra:Collection",
             "hydra:member": [
-                {"@id":"/api/accounts/1","@type":"Account","id":1,"name":"Conto corrente","recap":true,"user":"/api/users/1"},
-                {"@id":"/api/accounts/2","@type":"Account","id":2,"name":"Contanti","recap":true,"user":"/api/users/1"},
-                {"@id":"/api/accounts/3","@type":"Account","id":3,"name":"Conto deposito","recap":false,"user":"/api/users/1"},
-                {"@id":"/api/accounts/4","@type":"Account","id":4,"name":"Conto corrente","recap":true,"user":"/api/users/2"}
+                {"@id":"/api/accounts/1","@type":"Account","id":1,"name":"Conto corrente","recap":true,"user":"/api/users/2"},
+                {"@id":"/api/accounts/2","@type":"Account","id":2,"name":"Contanti","recap":true,"user":"/api/users/2"},
+                {"@id":"/api/accounts/3","@type":"Account","id":3,"name":"Conto deposito","recap":false,"user":"/api/users/2"},
+                {"@id":"/api/accounts/4","@type":"Account","id":4,"name":"Conto corrente","recap":true,"user":"/api/users/3"}
             ],
             "hydra:totalItems": 4
         }');
@@ -78,7 +78,7 @@ class AccountsTest extends AbstractTest
             "id" => 1,
             "name" => "Conto",
             "recap" => true,
-            "user" => "/api/users/1"
+            "user" => "/api/users/2"
         ]);
     }
 

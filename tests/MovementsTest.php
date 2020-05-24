@@ -11,9 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MovementsTest extends AbstractTest
 {
+    // COLLECTION OPERATIONS// ///////////////////////////////////////////////////////////////////////////////////////////
+
     public function testCreate(): void
     {
-        // Collection operations ///////////////////////////////////////////////////////////////////////////////////////
+        // Mario tries to create a movement associated with Fabio's account
         $this->marioRequest(Request::METHOD_POST, '/api/movements', [
             'json' => [
                 'date'          => '2020-05-20',
@@ -22,7 +24,16 @@ class MovementsTest extends AbstractTest
                 'account'       => '/api/accounts/1'
             ]
         ]);
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
 
+        $this->fabioRequest(Request::METHOD_POST, '/api/movements', [
+            'json' => [
+                'date'          => '2020-05-20',
+                'amount'        => '10.50',
+                'description'   => 'Spesa',
+                'account'       => '/api/accounts/1'
+            ]
+        ]);
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
         self::assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         self::assertJsonEquals([

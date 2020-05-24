@@ -2,10 +2,8 @@
 namespace App\Tests;
 
 use App\Entity\Account;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * Class AccountsTest
@@ -13,10 +11,12 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 class AccountsTest extends AbstractTest
 {
+    // COLLECTION OPERATIONS ///////////////////////////////////////////////////////////////////////////////////////////
+
     public function testCreate(): void
     {
         $this->marioRequest(Request::METHOD_POST, '/api/accounts', [
-            'json'    => ["name" => 'Conto corrente', "recap" => true, "user" => "/api/users/1"]
+            'json' => ['name' => 'Conto corrente', 'recap' => true, 'user' => '/api/users/1']
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
@@ -33,21 +33,6 @@ class AccountsTest extends AbstractTest
         self::assertMatchesResourceItemJsonSchema(Account::class);
     }
 
-    public function testGet(): void
-    {
-        $this->marioRequest(Request::METHOD_GET, '/api/accounts/1');
-        self::assertResponseStatusCodeSame(Response::HTTP_OK);
-        self::assertJsonEquals('{
-            "@context": "/api/contexts/Account",
-            "@id": "/api/accounts/1",
-            "@type": "Account",
-            "id": 1,
-            "name": "Banco Popolare",
-            "recap": true,
-            "user": "/api/users/1"
-        }');
-    }
-
     public function testGetCollection(): void
     {
         // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
@@ -58,22 +43,6 @@ class AccountsTest extends AbstractTest
             "@id": "/api/accounts",
             "@type": "hydra:Collection",
             "hydra:member": [
-                {
-                    "@id": "/api/accounts/1",
-                    "@type": "Account",
-                    "id": 1,
-                    "name": "Banco Popolare",
-                    "recap": true,
-                    "user": "/api/users/1"
-                },
-                {
-                    "@id": "/api/accounts/2",
-                    "@type": "Account",
-                    "id": 2,
-                    "name": "Conto Deposito",
-                    "recap": false,
-                    "user": "/api/users/1"
-                },
                 {
                     "@id": "/api/accounts/3",
                     "@type": "Account",
@@ -97,25 +66,39 @@ class AccountsTest extends AbstractTest
                     "name": "Conto deposito",
                     "recap": false,
                     "user": "/api/users/2"
-                },
-                {
-                    "@id": "/api/accounts/6",
-                    "@type": "Account",
-                    "id": 6,
-                    "name": "Conto corrente",
-                    "recap": true,
-                    "user": "/api/users/3"
                 }
             ],
-            "hydra:totalItems": 6
+            "hydra:totalItems": 3
+        }');
+    }
+
+    // ITEM OPERATIONS /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public function testGetItem(): void
+    {
+        // Mario try to view a Fabio's account data
+        $this->marioRequest(Request::METHOD_GET, '/api/accounts/1');
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        // Fabio view his account data
+        $this->fabioRequest(Request::METHOD_GET, '/api/accounts/1');
+        self::assertResponseStatusCodeSame(Response::HTTP_OK);
+        self::assertJsonEquals('{
+            "@context": "/api/contexts/Account",
+            "@id": "/api/accounts/1",
+            "@type": "Account",
+            "id": 1,
+            "name": "Banco Popolare",
+            "recap": true,
+            "user": "/api/users/1"
         }');
     }
 
     public function testUpdate(): void
     {
-        // Mario try to modify a Fabio's account
+        // Mario tries to modify a Fabio's account
         $this->marioRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);
-        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         // Fabio modify his account
         $this->fabioRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);

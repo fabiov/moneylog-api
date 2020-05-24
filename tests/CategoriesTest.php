@@ -94,9 +94,9 @@ class CategoriesTest extends AbstractTest
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
 
-    // Item operations /////////////////////////////////////////////////////////////////////////////////////////////////
+    // ITEM OPERATIONS /////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public function testGet(): void
+    public function testGetItem(): void
     {
         $this->marioRequest(Request::METHOD_GET, '/api/categories/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);

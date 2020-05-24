@@ -47,47 +47,15 @@ class CategoriesTest extends AbstractTest
             "@type": "hydra:Collection",
             "hydra:member": [
                 {
-                    "@id": "/api/categories/1",
-                    "@type": "Category",
-                    "id": 1,
-                    "name": "Auto",
-                    "enabled": true,
-                    "user": "/api/users/1"
-                },
-                {
                     "@id": "/api/categories/2",
                     "@type": "Category",
                     "id": 2,
                     "name": "Home",
                     "enabled": true,
                     "user": "/api/users/2"
-                },
-                {
-                    "@id": "/api/categories/3",
-                    "@type": "Category",
-                    "id": 3,
-                    "name": "Car",
-                    "enabled": true,
-                    "user": "/api/users/3"
-                },
-                {
-                    "@id": "/api/categories/4",
-                    "@type": "Category",
-                    "id": 4,
-                    "name": "Home",
-                    "enabled": true,
-                    "user": "/api/users/1"
-                },
-                {
-                    "@id": "/api/categories/5",
-                    "@type": "Category",
-                    "id": 5,
-                    "name": "Motorbike",
-                    "enabled": false,
-                    "user": "/api/users/1"
                 }
             ],
-            "hydra:totalItems": 5
+            "hydra:totalItems": 1
         }');
 
         self::createClient()->request(Request::METHOD_GET, '/api/categories');
@@ -98,7 +66,12 @@ class CategoriesTest extends AbstractTest
 
     public function testGetItem(): void
     {
+        // Mario try to view a Fabio's category data
         $this->marioRequest(Request::METHOD_GET, '/api/categories/1');
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        // Fabio view his category
+        $this->fabioRequest(Request::METHOD_GET, '/api/categories/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Category",
@@ -118,7 +91,7 @@ class CategoriesTest extends AbstractTest
     {
         // Mario try to modify a Fabio's category
         $this->marioRequest(Request::METHOD_PUT, '/api/categories/1', ['json' => ['name' => 'Car']]);
-        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
         // Fabio modify his category
         $this->fabioRequest(Request::METHOD_PUT, '/api/categories/1', ['json' => ['name' => 'Car']]);

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource(itemOperations={"get", "put"})
+ * @ApiResource(itemOperations={"get", "put"={"security"="object.getUser() == user"}})
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  */
 class Account

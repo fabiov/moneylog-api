@@ -16,7 +16,7 @@ class UsersTest extends AbstractTest
 
     public function testGet(): void
     {
-        $this->authRequest('GET', '/api/users/1');
+        $this->marioRequest('GET', '/api/users/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals([
             '@context' => '/api/contexts/User',

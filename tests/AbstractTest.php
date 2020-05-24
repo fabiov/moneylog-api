@@ -17,22 +17,37 @@ abstract class AbstractTest extends ApiTestCase
     /**
      * @var array
      */
-    private $authHeader;
+    private $authMarioHeader;
+
+    /**
+     * @var array
+     */
+    private $authFabioHeader;
 
     protected function setUp()
     {
         parent::setUp();
-        $authResponse = self::createClient()->request(
-            Request::METHOD_POST,
-            '/authentication_token',
-            ['json' => [ 'email' => "mario.rossi@fixture.it", "password" => "mario123"]]
-        )->toArray();
-        $this->authHeader = ['Authorization' => 'Bearer ' . $authResponse['token']];
+
+        $authResponse = self::createClient()->request(Request::METHOD_POST, '/authentication_token', [
+            'json' => [ 'email' => "mario.rossi@fixture.it", "password" => "mario123"]
+        ])->toArray();
+        $this->authMarioHeader = ['Authorization' => 'Bearer ' . $authResponse['token']];
+
+        $authResponse = self::createClient()->request(Request::METHOD_POST, '/authentication_token', [
+            'json' => [ 'email' => "fabio.ventura@fixture.it", "password" => "Fabio123"]
+        ])->toArray();
+        $this->authFabioHeader = ['Authorization' => 'Bearer ' . $authResponse['token']];
     }
 
-    protected function authRequest(string $method, string $url, array $options = []): ResponseInterface
+    protected function marioRequest(string $method, string $url, array $options = []): ResponseInterface
     {
-        $options = array_merge_recursive($options, ['headers' => $this->authHeader]);
+        $options = array_merge_recursive($options, ['headers' => $this->authMarioHeader]);
+        return self::createClient()->request($method, $url, $options);
+    }
+
+    protected function fabioRequest(string $method, string $url, array $options = []): ResponseInterface
+    {
+        $options = array_merge_recursive($options, ['headers' => $this->authFabioHeader]);
         return self::createClient()->request($method, $url, $options);
     }
 

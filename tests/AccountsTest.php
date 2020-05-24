@@ -15,7 +15,7 @@ class AccountsTest extends AbstractTest
 {
     public function testCreate(): void
     {
-        $this->authRequest(Request::METHOD_POST, '/api/accounts', [
+        $this->marioRequest(Request::METHOD_POST, '/api/accounts', [
             'json'    => ["name" => 'Conto corrente', "recap" => true, "user" => "/api/users/1"]
         ]);
 
@@ -35,7 +35,7 @@ class AccountsTest extends AbstractTest
 
     public function testGet(): void
     {
-        $this->authRequest(Request::METHOD_GET, '/api/accounts/1');
+        $this->marioRequest(Request::METHOD_GET, '/api/accounts/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Account",
@@ -51,7 +51,7 @@ class AccountsTest extends AbstractTest
     public function testGetCollection(): void
     {
         // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
-        $this->authRequest(Request::METHOD_GET, '/api/accounts');
+        $this->marioRequest(Request::METHOD_GET, '/api/accounts');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Account",
@@ -113,7 +113,12 @@ class AccountsTest extends AbstractTest
 
     public function testUpdate(): void
     {
-        $this->authRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);
+        // Mario try to modify Fabio's account
+        $this->marioRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
+        // Fabio modify his account
+        $this->fabioRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals([
             "@context" => "/api/contexts/Account",
@@ -128,7 +133,7 @@ class AccountsTest extends AbstractTest
 
     public function testDelete(): void
     {
-        $this->authRequest(Request::METHOD_DELETE, '/api/accounts/1');
+        $this->marioRequest(Request::METHOD_DELETE, '/api/accounts/1');
         self::assertResponseStatusCodeSame(Response::HTTP_METHOD_NOT_ALLOWED);
     }
 }

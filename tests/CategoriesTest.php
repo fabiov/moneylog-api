@@ -15,7 +15,7 @@ class CategoriesTest extends AbstractTest
 
    public function testCreate(): void
     {
-        $this->authRequest(Request::METHOD_POST, '/api/categories', ['json' => [
+        $this->marioRequest(Request::METHOD_POST, '/api/categories', ['json' => [
             'name' => 'Car', 'enabled' => true, 'user' => '/api/users/1'
         ]]);
 
@@ -39,7 +39,7 @@ class CategoriesTest extends AbstractTest
     public function testGetCollection(): void
     {
         // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
-        $this->authRequest(Request::METHOD_GET, '/api/categories');
+        $this->marioRequest(Request::METHOD_GET, '/api/categories');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Category",
@@ -98,7 +98,7 @@ class CategoriesTest extends AbstractTest
 
     public function testGet(): void
     {
-        $this->authRequest(Request::METHOD_GET, '/api/categories/1');
+        $this->marioRequest(Request::METHOD_GET, '/api/categories/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Category",
@@ -116,7 +116,7 @@ class CategoriesTest extends AbstractTest
 
     public function testUpdate(): void
     {
-        $this->authRequest(Request::METHOD_PUT, '/api/categories/1', ['json' => ['name' => 'Car']]);
+        $this->marioRequest(Request::METHOD_PUT, '/api/categories/1', ['json' => ['name' => 'Car']]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Category",
@@ -134,7 +134,7 @@ class CategoriesTest extends AbstractTest
 
     public function testDelete(): void
     {
-        $this->authRequest(Request::METHOD_DELETE, '/api/categories/1');
+        $this->marioRequest(Request::METHOD_DELETE, '/api/categories/1');
         self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
 
         self::createClient()->request(Request::METHOD_DELETE, '/api/categories/1');

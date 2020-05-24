@@ -14,7 +14,7 @@ class MovementsTest extends AbstractTest
     public function testCreate(): void
     {
         // Collection operations ///////////////////////////////////////////////////////////////////////////////////////
-        $this->authRequest(Request::METHOD_POST, '/api/movements', [
+        $this->marioRequest(Request::METHOD_POST, '/api/movements', [
             'json' => [
                 'date'          => '2020-05-20',
                 'amount'        => '10.50',
@@ -41,7 +41,7 @@ class MovementsTest extends AbstractTest
     public function testGetCollection(): void
     {
         // The client implements Symfony HttpClient's `HttpClientInterface`, and the response `ResponseInterface`
-        $this->authRequest(Request::METHOD_GET, '/api/movements');
+        $this->marioRequest(Request::METHOD_GET, '/api/movements');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEqualsFile(__DIR__ . '/json/movements_collection.json');
     }
@@ -50,7 +50,7 @@ class MovementsTest extends AbstractTest
 
     public function testGet(): void
     {
-        $this->authRequest(Request::METHOD_GET, '/api/movements/1');
+        $this->marioRequest(Request::METHOD_GET, '/api/movements/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Movement",
@@ -66,7 +66,7 @@ class MovementsTest extends AbstractTest
 
     public function testUpdate(): void
     {
-        $this->authRequest(Request::METHOD_PUT, '/api/movements/1', ['json' => ['description' => 'Diesel']]);
+        $this->marioRequest(Request::METHOD_PUT, '/api/movements/1', ['json' => ['description' => 'Diesel']]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Movement",
@@ -82,7 +82,7 @@ class MovementsTest extends AbstractTest
 
     public function testDelete(): void
     {
-        $this->authRequest(Request::METHOD_DELETE, '/api/movements/1');
+        $this->marioRequest(Request::METHOD_DELETE, '/api/movements/1');
         self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
     }
 }

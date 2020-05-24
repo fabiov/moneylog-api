@@ -50,31 +50,31 @@ class CategoriesTest extends AbstractTest
                     "@id": "/api/categories/1",
                     "@type": "Category",
                     "id": 1,
-                    "name": "Home",
+                    "name": "Auto",
                     "enabled": true,
-                    "user": "/api/users/2"
+                    "user": "/api/users/1"
                 },
                 {
                     "@id": "/api/categories/2",
                     "@type": "Category",
                     "id": 2,
-                    "name": "Car",
+                    "name": "Home",
                     "enabled": true,
-                    "user": "/api/users/3"
+                    "user": "/api/users/2"
                 },
                 {
                     "@id": "/api/categories/3",
                     "@type": "Category",
                     "id": 3,
-                    "name": "Home",
+                    "name": "Car",
                     "enabled": true,
-                    "user": "/api/users/1"
+                    "user": "/api/users/3"
                 },
                 {
                     "@id": "/api/categories/4",
                     "@type": "Category",
                     "id": 4,
-                    "name": "Car",
+                    "name": "Home",
                     "enabled": true,
                     "user": "/api/users/1"
                 },
@@ -105,9 +105,9 @@ class CategoriesTest extends AbstractTest
             "@id": "/api/categories/1",
             "@type": "Category",
             "id": 1,
-            "name": "Home",
+            "name": "Auto",
             "enabled": true,
-            "user": "/api/users/2"
+            "user": "/api/users/1"
         }');
 
         self::createClient()->request(Request::METHOD_GET, '/api/categories/1');
@@ -125,7 +125,7 @@ class CategoriesTest extends AbstractTest
             "id": 1,
             "name": "Car",
             "enabled": true,
-            "user": "/api/users/2"
+            "user": "/api/users/1"
         }');
 
         self::createClient()->request(Request::METHOD_PUT, '/api/categories/1');

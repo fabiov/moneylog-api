@@ -6,7 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(itemOperations={"get", "put"={"security"="object.getUser() == user"}})
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
 class Category

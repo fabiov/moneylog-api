@@ -113,7 +113,7 @@ class AccountsTest extends AbstractTest
 
     public function testUpdate(): void
     {
-        // Mario try to modify Fabio's account
+        // Mario try to modify a Fabio's account
         $this->marioRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);
         self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
 

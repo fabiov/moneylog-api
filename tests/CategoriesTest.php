@@ -116,7 +116,12 @@ class CategoriesTest extends AbstractTest
 
     public function testUpdate(): void
     {
+        // Mario try to modify a Fabio's category
         $this->marioRequest(Request::METHOD_PUT, '/api/categories/1', ['json' => ['name' => 'Car']]);
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+
+        // Fabio modify his category
+        $this->fabioRequest(Request::METHOD_PUT, '/api/categories/1', ['json' => ['name' => 'Car']]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
             "@context": "/api/contexts/Category",
@@ -135,9 +140,9 @@ class CategoriesTest extends AbstractTest
     public function testDelete(): void
     {
         $this->marioRequest(Request::METHOD_DELETE, '/api/categories/1');
-        self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+        self::assertResponseStatusCodeSame(Response::HTTP_METHOD_NOT_ALLOWED);
 
         self::createClient()->request(Request::METHOD_DELETE, '/api/categories/1');
-        self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
+        self::assertResponseStatusCodeSame(Response::HTTP_METHOD_NOT_ALLOWED);
     }
 }

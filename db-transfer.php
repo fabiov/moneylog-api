@@ -93,3 +93,28 @@ if ($results = mysqli_query($old, $select)) {
 if (mysqli_errno($old)) {
     echo mysqli_error($old) . PHP_EOL;
 }
+
+// COPIO GLI ACCANTONAMENTI ////////////////////////////////////////////////////////////////////////////////////////////
+$select = "SELECT id, userId, valuta, importo, descrizione FROM aside WHERE userId IN ($userList)";
+if ($results = mysqli_query($old, $select)) {
+    while (null !== ($row = $results->fetch_assoc())) {
+        $id          = $row['id'];
+        $userId      = $row['userId'];
+        $date        = $row['valuta'];
+        $amount      = $row['importo'];
+        $description = $row['descrizione'];
+
+        $query = "INSERT INTO provision (id, user_id, date, amount, description) "
+               . "VALUES ($id, $userId, '$date', $amount, '$description') "
+               . "ON DUPLICATE KEY UPDATE "
+               . "user_id=$userId, date='$date', amount=$amount, description='$description'";
+        echo $query . PHP_EOL;
+        mysqli_query($new, $query);
+        if (mysqli_errno($new)) {
+            echo mysqli_error($new) . PHP_EOL;
+        }
+    }
+}
+if (mysqli_errno($old)) {
+    echo mysqli_error($old) . PHP_EOL;
+}

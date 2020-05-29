@@ -82,6 +82,11 @@ class User implements UserInterface
      */
     private $accounts;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Setting", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $setting;
+
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
@@ -215,6 +220,23 @@ class User implements UserInterface
             if ($account->getUser() === $this) {
                 $account->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getSetting(): ?Setting
+    {
+        return $this->setting;
+    }
+
+    public function setSetting(Setting $setting): self
+    {
+        $this->setting = $setting;
+
+        // set the owning side of the relation if necessary
+        if ($setting->getUser() !== $this) {
+            $setting->setUser($this);
         }
 
         return $this;

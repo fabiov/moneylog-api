@@ -5,7 +5,7 @@ return [
             'user'        => '@user_fabio',
             'date'        => new DateTime('2020-05-20'),
             'amount'      => 10,
-            'description' => 'Shopping',
+            'description' => 'Provision 1 2020-05',
         ],
         'provision_2_mario'    => [
             'user'        => '@user_mario',

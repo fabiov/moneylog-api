@@ -6,7 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(collectionOperations={}, itemOperations={"get", "put"})
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
  */
 class Setting

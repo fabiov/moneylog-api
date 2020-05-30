@@ -1,8 +1,24 @@
-.env
 .idea
-docker-compose.override.yaml
-docker-compose.override.yml
-docker/letsencrypt/data
-docker/letsencrypt/domains.conf
-docker/nginx-proxy/certs
-docker/nginx-proxy/vhost.d
+docker/db/data
+docker/db/logs
+
+###> symfony/framework-bundle ###
+.env.*.local
+.env.local
+.env.local.php
+public/bundles
+var
+vendor
+###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+note

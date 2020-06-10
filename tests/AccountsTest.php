@@ -15,10 +15,11 @@ class AccountsTest extends AbstractTest
 
     public function testCreate(): void
     {
+        // Mario create a new account with Fabio's user id,
+        // but user id is ignored and account is created with Mario's user id
         $this->marioRequest(Request::METHOD_POST, '/api/accounts', [
             'json' => ['name' => 'Conto corrente', 'recap' => true, 'user' => '/api/users/1']
         ]);
-
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
         self::assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         self::assertJsonEquals('{
@@ -28,7 +29,7 @@ class AccountsTest extends AbstractTest
             "id":7,
             "name":"Conto corrente",
             "recap":true,
-            "user":"/api/users/1"
+            "user":"/api/users/2"
         }');
         self::assertMatchesResourceItemJsonSchema(Account::class);
     }

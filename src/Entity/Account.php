@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(itemOperations={"get", "put"})
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  */
-class Account
+class Account implements RelatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -57,7 +58,6 @@ class Account
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -69,7 +69,6 @@ class Account
     public function setRecap(bool $recap): self
     {
         $this->recap = $recap;
-
         return $this;
     }
 
@@ -81,7 +80,6 @@ class Account
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 }

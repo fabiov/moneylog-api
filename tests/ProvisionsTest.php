@@ -15,6 +15,8 @@ class ProvisionsTest extends AbstractTest
 
     public function testCreate(): void
     {
+        // Mario create a new provision with Fabio's user id,
+        // but user id is ignored and provision is created with Mario's user id
         $this->marioRequest(Request::METHOD_POST, '/api/provisions', ['json' => [
             'date' => '2020-05-29', 'amount' => '150', 'description' => 'Provision', 'user' => '/api/users/1'
         ]]);
@@ -29,7 +31,7 @@ class ProvisionsTest extends AbstractTest
             "date":"2020-05-29T00:00:00+00:00",
             "amount":"150.00",
             "description":"Provision",
-            "user":"/api/users/1"
+            "user":"/api/users/2"
         }');
         self::assertMatchesResourceItemJsonSchema(Provision::class);
     }

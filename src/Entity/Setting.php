@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(collectionOperations={}, itemOperations={"get", "put"})
@@ -13,46 +14,47 @@ class Setting
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="setting", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @Assert\NotNull
+     * @Assert\Range(min = 1, max = 28, notInRangeMessage = "You must be between {{ min }} and {{ max }}")
+     * @ORM\Column(type="smallint", options={"default": 1})
      */
-    private $payday;
+    private $payday = 1;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @Assert\GreaterThanOrEqual(2)
+     * @Assert\NotNull
+     * @ORM\Column(type="smallint", options={"default": 12})
      */
-    private $months;
+    private $months = 12;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Assert\NotNull
+     * @ORM\Column(type="boolean", options={"default": false})
      */
-    private $provisioning;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    private $provisioning = false;
 
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     * @throws \Exception
+     */
     public function setUser(User $user): self
     {
+        if ($this->user !== null) {
+            throw new \Exception('user already defined');
+        }
         $this->user = $user;
-
         return $this;
     }
 
@@ -64,7 +66,6 @@ class Setting
     public function setPayday(int $payday): self
     {
         $this->payday = $payday;
-
         return $this;
     }
 
@@ -76,7 +77,6 @@ class Setting
     public function setMonths(int $months): self
     {
         $this->months = $months;
-
         return $this;
     }
 
@@ -88,7 +88,6 @@ class Setting
     public function setProvisioning(bool $provisioning): self
     {
         $this->provisioning = $provisioning;
-
         return $this;
     }
 }

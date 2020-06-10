@@ -25,6 +25,7 @@ services:
             - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
             - ./public:/srv/api/public:ro
         ports:
+            - '8081:8081'
             - '8082:8082'
         networks:
             - moneylog-api

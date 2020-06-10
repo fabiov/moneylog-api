@@ -43,7 +43,6 @@ class SettingsTest extends AbstractTest
             "@context": "/api/contexts/Setting",
             "@id": "/api/settings/1",
             "@type": "Setting",
-            "id": 1,
             "user": "/api/users/1",
             "payday": 12,
             "months": 18,
@@ -57,6 +56,22 @@ class SettingsTest extends AbstractTest
         $this->marioRequest(Request::METHOD_PUT, '/api/settings/1', ['json' => ['payday' => 10]]);
         self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
 
+        // Fabio modify his setting with bad data
+        $this->fabioRequest(Request::METHOD_PUT, '/api/settings/1', ['json' => [
+            'payday' => 29,  'months' => 1
+        ]]);
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertJsonEquals('{
+            "@context": "/api/contexts/ConstraintViolationList",
+            "@type": "ConstraintViolationList",
+            "hydra:title": "An error occurred",
+            "hydra:description": "payday: You must be between 1 and 28\nmonths: This value should be greater than or equal to 2.",
+            "violations": [
+                {"propertyPath": "payday", "message": "You must be between 1 and 28"},
+                {"propertyPath": "months", "message": "This value should be greater than or equal to 2."}
+            ]
+        }');
+
         // Fabio modify his setting
         $this->fabioRequest(Request::METHOD_PUT, '/api/settings/1', ['json' => ['payday' => 10]]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -64,7 +79,6 @@ class SettingsTest extends AbstractTest
             "@context": "/api/contexts/Setting",
             "@id": "/api/settings/1",
             "@type": "Setting",
-            "id": 1,
             "user": "/api/users/1",
             "payday": 10,
             "months": 18,

@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\ProvisionRepository")
  */
-class Provision
+class Provision implements RelatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -64,7 +65,6 @@ class Provision
     public function setAmount(string $amount): self
     {
         $this->amount = $amount;
-
         return $this;
     }
 
@@ -76,7 +76,6 @@ class Provision
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -88,7 +87,6 @@ class Provision
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 }

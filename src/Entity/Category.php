@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(itemOperations={"get", "put"})
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
-class Category
+class Category implements RelatedUserInterface
 {
     /**
      * @ORM\Id()
@@ -71,7 +72,6 @@ class Category
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 }

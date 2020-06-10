@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(collectionOperations={}, itemOperations={"get", "put"})
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
  */
-class Setting
+class Setting implements RelatedUserInterface
 {
     /**
      * @ORM\Id()

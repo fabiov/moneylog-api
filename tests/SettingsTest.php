@@ -43,7 +43,6 @@ class SettingsTest extends AbstractTest
             "@context": "/api/contexts/Setting",
             "@id": "/api/settings/1",
             "@type": "Setting",
-            "user": "/api/users/1",
             "payday": 12,
             "months": 18,
             "provisioning": true
@@ -79,7 +78,6 @@ class SettingsTest extends AbstractTest
             "@context": "/api/contexts/Setting",
             "@id": "/api/settings/1",
             "@type": "Setting",
-            "user": "/api/users/1",
             "payday": 10,
             "months": 18,
             "provisioning": true

@@ -22,15 +22,14 @@ class CategoriesTest extends AbstractTest
         ]]);
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
         self::assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-        self::assertJsonEquals([
-            '@context' => '/api/contexts/Category',
-            '@id'      => '/api/categories/6',
-            '@type'    => 'Category',
-            'id'       => 6,
-            'name'     => 'Car',
-            'enabled'  => true,
-            'user'     => '/api/users/2'
-        ]);
+        self::assertJsonEquals('{
+            "@context": "/api/contexts/Category",
+            "@id": "/api/categories/6",
+            "@type": "Category",
+            "id": 6,
+            "name": "Car",
+            "enabled": true
+        }');
         self::assertMatchesResourceItemJsonSchema(Category::class);
         self::createClient()->request(Request::METHOD_POST, '/api/categories');
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
@@ -51,13 +50,11 @@ class CategoriesTest extends AbstractTest
                     "@type": "Category",
                     "id": 2,
                     "name": "Home",
-                    "enabled": true,
-                    "user": "/api/users/2"
+                    "enabled": true
                 }
             ],
             "hydra:totalItems": 1
         }');
-
         self::createClient()->request(Request::METHOD_GET, '/api/categories');
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
@@ -79,10 +76,8 @@ class CategoriesTest extends AbstractTest
             "@type": "Category",
             "id": 1,
             "name": "Auto",
-            "enabled": true,
-            "user": "/api/users/1"
+            "enabled": true
         }');
-
         self::createClient()->request(Request::METHOD_GET, '/api/categories/1');
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
@@ -102,10 +97,8 @@ class CategoriesTest extends AbstractTest
             "@type": "Category",
             "id": 1,
             "name": "Car",
-            "enabled": true,
-            "user": "/api/users/1"
+            "enabled": true
         }');
-
         self::createClient()->request(Request::METHOD_PUT, '/api/categories/1');
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }

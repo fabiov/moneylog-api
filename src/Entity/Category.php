@@ -5,14 +5,20 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(itemOperations={"get", "put"})
+ * @ApiResource(
+ *     itemOperations={"get", "put"},
+ *     normalizationContext = {"groups" = {"read"}},
+ *     denormalizationContext = {"groups" = {"write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
 class Category implements RelatedUserInterface
 {
     /**
+     * @Groups({"read"})
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -20,11 +26,13 @@ class Category implements RelatedUserInterface
     private $id;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\Column(type="boolean")
      */
     private $enabled;

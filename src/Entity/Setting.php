@@ -5,10 +5,16 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource(collectionOperations={}, itemOperations={"get", "put"})
+ * @ApiResource(
+ *     collectionOperations={},
+ *     itemOperations={"get", "put"},
+ *     normalizationContext = {"groups" = {"read"}},
+ *     denormalizationContext = {"groups" = {"write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
  */
 class Setting implements RelatedUserInterface
@@ -23,6 +29,7 @@ class Setting implements RelatedUserInterface
     /**
      * @Assert\NotNull
      * @Assert\Range(min = 1, max = 28, notInRangeMessage = "You must be between {{ min }} and {{ max }}")
+     * @Groups({"read", "write"})
      * @ORM\Column(type="smallint", options={"default": 1})
      */
     private $payday = 1;
@@ -30,12 +37,14 @@ class Setting implements RelatedUserInterface
     /**
      * @Assert\GreaterThanOrEqual(2)
      * @Assert\NotNull
+     * @Groups({"read", "write"})
      * @ORM\Column(type="smallint", options={"default": 12})
      */
     private $months = 12;
 
     /**
      * @Assert\NotNull
+     * @Groups({"read", "write"})
      * @ORM\Column(type="boolean", options={"default": false})
      */
     private $provisioning = false;

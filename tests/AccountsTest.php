@@ -28,8 +28,7 @@ class AccountsTest extends AbstractTest
             "@type":"Account",
             "id":7,
             "name":"Conto corrente",
-            "recap":true,
-            "user":"/api/users/2"
+            "recap":true
         }');
         self::assertMatchesResourceItemJsonSchema(Account::class);
     }
@@ -49,24 +48,21 @@ class AccountsTest extends AbstractTest
                     "@type": "Account",
                     "id": 3,
                     "name": "Conto corrente",
-                    "recap": true,
-                    "user": "/api/users/2"
+                    "recap": true
                 },
                 {
                     "@id": "/api/accounts/4",
                     "@type": "Account",
                     "id": 4,
                     "name": "Contanti",
-                    "recap": true,
-                    "user": "/api/users/2"
+                    "recap": true
                 },
                 {
                     "@id": "/api/accounts/5",
                     "@type": "Account",
                     "id": 5,
                     "name": "Conto deposito",
-                    "recap": false,
-                    "user": "/api/users/2"
+                    "recap": false
                 }
             ],
             "hydra:totalItems": 3
@@ -90,8 +86,7 @@ class AccountsTest extends AbstractTest
             "@type": "Account",
             "id": 1,
             "name": "Banco Popolare",
-            "recap": true,
-            "user": "/api/users/1"
+            "recap": true
         }');
     }
 
@@ -104,15 +99,14 @@ class AccountsTest extends AbstractTest
         // Fabio modify his account
         $this->fabioRequest(Request::METHOD_PUT, '/api/accounts/1', ['json' => ['name' => 'Conto']]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
-        self::assertJsonEquals([
-            "@context" => "/api/contexts/Account",
-            "@id" => "/api/accounts/1",
-            "@type" => "Account",
-            "id" => 1,
-            "name" => "Conto",
-            "recap" => true,
-            "user" => "/api/users/1"
-        ]);
+        self::assertJsonEquals('{
+            "@context": "/api/contexts/Account",
+            "@id": "/api/accounts/1",
+            "@type": "Account",
+            "id": 1,
+            "name": "Conto",
+            "recap": true
+        }');
     }
 
     public function testDelete(): void

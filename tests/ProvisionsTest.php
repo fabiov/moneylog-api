@@ -30,8 +30,7 @@ class ProvisionsTest extends AbstractTest
             "id":5,
             "date":"2020-05-29T00:00:00+00:00",
             "amount":"150.00",
-            "description":"Provision",
-            "user":"/api/users/2"
+            "description":"Provision"
         }');
         self::assertMatchesResourceItemJsonSchema(Provision::class);
     }
@@ -52,8 +51,7 @@ class ProvisionsTest extends AbstractTest
                     "id": 2,
                     "date": "2020-05-20T00:00:00+00:00",
                     "amount": "2.00",
-                    "description": "Bar",
-                    "user": "/api/users/2"
+                    "description": "Bar"
                 },
                 {
                     "@id": "/api/provisions/3",
@@ -61,8 +59,7 @@ class ProvisionsTest extends AbstractTest
                     "id": 3,
                     "date": "2020-05-20T00:00:00+00:00",
                     "amount": "200.00",
-                    "description": "Avanzo",
-                    "user": "/api/users/2"
+                    "description": "Avanzo"
                 }
             ],
             "hydra:totalItems": 2
@@ -87,8 +84,7 @@ class ProvisionsTest extends AbstractTest
             "id": 1,
             "date": "2020-05-20T00:00:00+00:00",
             "amount": "10.00",
-            "description": "Provision 1 2020-05",
-            "user": "/api/users/1"
+            "description": "Provision 1 2020-05"
         }');
     }
 
@@ -112,8 +108,7 @@ class ProvisionsTest extends AbstractTest
             "id": 1,
             "date": "2020-05-20T00:00:00+00:00",
             "amount": "10.00",
-            "description": "Modified",
-            "user": "/api/users/1"
+            "description": "Modified"
         }');
     }
 

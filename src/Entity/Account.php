@@ -5,15 +5,21 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource(itemOperations={"get", "put"})
+ * @ApiResource(
+ *     itemOperations={"get", "put"},
+ *     normalizationContext = {"groups" = {"read"}},
+ *     denormalizationContext = {"groups" = {"write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  */
 class Account implements RelatedUserInterface
 {
     /**
+     * @Groups({"read"})
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -29,12 +35,14 @@ class Account implements RelatedUserInterface
      * )
      * @Assert\NotBlank
      * @Assert\NotNull
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
      * @Assert\NotNull
+     * @Groups({"read", "write"})
      * @ORM\Column(type="boolean")
      */
     private $recap;

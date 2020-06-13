@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Interfaces\RelatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -57,12 +58,12 @@ class Setting implements RelatedUserInterface
     /**
      * @param User $user
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     public function setUser(User $user): self
     {
         if ($this->user !== null) {
-            throw new \Exception('user already defined');
+            throw new Exception('user already defined');
         }
         $this->user = $user;
         return $this;

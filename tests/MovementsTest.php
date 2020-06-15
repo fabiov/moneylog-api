@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MovementsTest extends AbstractTest
 {
-    // COLLECTION OPERATIONS// ///////////////////////////////////////////////////////////////////////////////////////////
+    // COLLECTION OPERATIONS// /////////////////////////////////////////////////////////////////////////////////////////
 
     public function testCreate(): void
     {
@@ -61,6 +61,7 @@ class MovementsTest extends AbstractTest
 
     public function testGet(): void
     {
+        // mario get his movement details
         $this->marioRequest(Request::METHOD_GET, '/api/movements/1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
@@ -73,10 +74,15 @@ class MovementsTest extends AbstractTest
             "description": "Shopping",
             "account": "/api/accounts/3"
         }');
+
+        // mario try to get giuseppe's movement details
+        $this->marioRequest(Request::METHOD_GET, '/api/movements/4');
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 
     public function testUpdate(): void
     {
+        // Mario update his movement
         $this->marioRequest(Request::METHOD_PUT, '/api/movements/1', ['json' => ['description' => 'Diesel']]);
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertJsonEquals('{
@@ -89,11 +95,24 @@ class MovementsTest extends AbstractTest
             "description": "Diesel",
             "account": "/api/accounts/3"
         }');
+
+        // Mario update his movement
+        $this->marioRequest(Request::METHOD_PUT, '/api/movements/4', ['json' => ['description' => 'x']]);
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        // Mario try to set giuseppe's account to his movement
+        $this->marioRequest(Request::METHOD_PUT, '/api/movements/1', ['json' => ['account' => '/api/accounts/6']]);
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
     public function testDelete(): void
     {
+        // Mario delete his movement
         $this->marioRequest(Request::METHOD_DELETE, '/api/movements/1');
         self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+
+        // Mario try to delete Giuseppe's movement
+        $this->marioRequest(Request::METHOD_DELETE, '/api/movements/4');
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 }

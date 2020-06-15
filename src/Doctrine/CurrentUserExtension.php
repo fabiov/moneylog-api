@@ -6,6 +6,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Account;
 use App\Entity\Category;
+use App\Entity\Movement;
 use App\Entity\Provision;
 use App\Entity\Setting;
 use Doctrine\ORM\QueryBuilder;
@@ -44,11 +45,22 @@ final class CurrentUserExtension implements QueryCollectionExtensionInterface, Q
 
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
     {
-        $classList = [Account::class, Category::class, Provision::class, Setting::class];
-        if (in_array($resourceClass, $classList) && null !== ($user = $this->security->getUser())) {
+        if (null !== ($user = $this->security->getUser())) {
             $rootAlias = $queryBuilder->getRootAliases()[0];
-            $queryBuilder->andWhere(sprintf('%s.user = :current_user', $rootAlias));
-            $queryBuilder->setParameter('current_user', $user->getId());
+            switch ($resourceClass) {
+                case Account::class:
+                case Category::class:
+                case Provision::class:
+                case Setting::class:
+                    $queryBuilder->andWhere("$rootAlias.user = :current_user");
+                    $queryBuilder->setParameter('current_user', $user->getId());
+                    break;
+                case Movement::class:
+                    $queryBuilder->join("$rootAlias.account", 'a');
+                    $queryBuilder->andWhere("a.user = :current_user");
+                    $queryBuilder->setParameter('current_user', $user->getId());
+                    break;
+            }
         }
     }
 }

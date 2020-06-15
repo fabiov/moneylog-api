@@ -41,7 +41,7 @@ services:
             APP_ENV: dev
             PHP_IDE_CONFIG: 'serverName=moneylog'
             PHP_XDEBUG_ENABLED: 1 # Set 1 to enable.
-            XDEBUG_CONFIG: remote_host=10.1.70.231
+            XDEBUG_CONFIG: remote_host=192.168.1.66
         expose:
           - 9000
         networks:

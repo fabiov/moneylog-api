@@ -1,40 +1,41 @@
-DROP TABLE customer;
+DROP TABLE IF EXISTS customer;
 CREATE TABLE `customer` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `email` varchar(255),
-  `name` varchar(255),
-  `surname` varchar(255)
-);
-DROP TABLE author;
-CREATE TABLE `author` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255)
+    `id` int PRIMARY KEY AUTO_INCREMENT,
+    `email` varchar(255) NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `surname` varchar(255) NOT NULL
 );
 
-DROP TABLE book;
+DROP TABLE IF EXISTS author;
+CREATE TABLE `author` (
+    `id` int PRIMARY KEY AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL
+);
+
+DROP TABLE IF EXISTS book;
 CREATE TABLE `book` (
     `id` int PRIMARY KEY AUTO_INCREMENT,
     `author_id` int NOT NULL,
-    `title` varchar(255),
-    `isbn` varchar(255),
-    `description` text,
-    `price` double,
-    `availability` int
+    `name` varchar(255) NOT NULL,
+    `isbn` varchar(255) UNIQUE NOT NULL,
+    `description` text NOT NULL,
+    `price` double NOT NULL,
+    `availability` int NOT NULL
 );
 
-DROP TABLE invoice;
+DROP TABLE IF EXISTS invoice;
 CREATE TABLE `invoice` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `customer_id` int NOT NULL,
-  `date` datetime
+    `id` int PRIMARY KEY AUTO_INCREMENT,
+    `customer_id` int NOT NULL,
+    `date` datetime NOT NULL
 );
 
-DROP TABLE item;
+DROP TABLE IF EXISTS item;
 CREATE TABLE `item` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `invoice_id` int NOT NULL,
-  `book_id` int NOT NULL,
-  `price` decimal
+    `id` int PRIMARY KEY AUTO_INCREMENT,
+    `invoice_id` int NOT NULL,
+    `book_id` int NOT NULL,
+    `price` decimal NOT NULL
 );
 
 ALTER TABLE `book` ADD FOREIGN KEY (`author_id`) REFERENCES `author` (`id`);

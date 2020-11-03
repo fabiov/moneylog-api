@@ -23,6 +23,73 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class BookController extends AbstractController
 {
     /**
+     * @Route("/books", name = "api_library_post_book_collection", methods = {"POST"})
+     * @param Request $request
+     * @return Response
+     * @throws Exception|ExceptionInterface
+     */
+    public function postBooksCollection(Request $request)
+    {
+        $errs = [];
+        $data = json_decode($request->getContent(), true);
+        $sql = 'INSERT INTO book VALUES (null, :author_id, :title, :isbn, :description, :price, :availability)';
+
+        if (isset($data['author']) && isset($data['author']['id'])) {
+            $parameters['author_id'] = $data['author']['id'];
+        } else {
+            $errs['author_id'] = 'missing parameters';
+        }
+
+        if (isset($data['title'])) {
+            $parameters['title'] = $data['title'];
+        } else {
+            $errs['title'] = 'missing parameters';
+        }
+
+        if (isset($data['isbn'])) {
+            $parameters['isbn'] = $data['isbn'];
+        } else {
+            $errs['isbn'] = 'missing parameters';
+        }
+
+        if (isset($data['description'])) {
+            $parameters['description'] = $data['description'];
+        } else {
+            $errs['description'] = 'missing parameters';
+        }
+
+        if (isset($data['price'])) {
+            $parameters['price'] = $data['price'];
+        } else {
+            $errs['price'] = 'missing parameters';
+        }
+
+        if (isset($data['availability'])) {
+            $parameters['availability'] = $data['availability'];
+        } else {
+            $errs['availability'] = 'missing parameters';
+        }
+
+        if ($errs) {
+            return new JsonResponse($errs, Response::HTTP_BAD_REQUEST);
+        }
+
+        /* @var Statement $stmt */
+        $conn = $this->getDoctrine()->getManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+
+        try {
+            $stmt->execute($parameters);
+        } catch (UniqueConstraintViolationException $e) {
+            return new JsonResponse('Integrity constraint violation', Response::HTTP_BAD_REQUEST);
+        } catch (Exception $exception) {
+            return new JsonResponse($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(['id' => $conn->lastInsertId()], Response::HTTP_CREATED);
+    }
+
+    /**
      * @Route("/books", name = "api_library_get_books_collection", methods = {"GET"})
      * @param Request $request
      * @return Response

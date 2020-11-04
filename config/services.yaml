@@ -31,5 +31,5 @@ services:
         arguments: ['@App\Swagger\SwaggerDecorator.inner']
         autoconfigure: false
         
-    App\Service\Domain\Repository\BookRepository:
+    App\BookShop\Domain\Book\Service\Repository\BookRepository:
         arguments: [ '@doctrine.orm.entity_manager' ]

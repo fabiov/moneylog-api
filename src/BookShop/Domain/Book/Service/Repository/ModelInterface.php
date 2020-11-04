@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Domain\Repository;
+namespace App\BookShop\Domain\Book\Service\Repository;
 
 interface ModelInterface
 {

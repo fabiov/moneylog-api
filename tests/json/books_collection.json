@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "title": "Riccardino",
+    "isbn": "9788838940750",
+    "description": "L'ultima avventura del commissario Montalbano.",
+    "price": "14.25",
+    "availability": "100",
+    "author": {
+      "id": "1",
+      "name": "Camilleri"
+    }
+  },
+  {
+    "id": "2",
+    "title": "Gli arancini di Montalbano",
+    "isbn": "9788838938511",
+    "description": "Venti racconti si dispiegano l'un dietro l'altro.",
+    "price": "11.25",
+    "availability": "251",
+    "author": {
+      "id": "1",
+      "name": "Camilleri"
+    }
+  },
+  {
+    "id": "3",
+    "title": "Il fu Mattia Pascal",
+    "isbn": "9788804725978",
+    "description": "Siamo stati messi al mondo senza libretto delle istruzioni.",
+    "price": "9.5",
+    "availability": "534",
+    "author": {
+      "id": "2",
+      "name": "Pirandello"
+    }
+  },
+  {
+    "id": "4",
+    "title": "Uno, nessuno e centomila",
+    "isbn": "9788817014670",
+    "description": "Una realtÃ  non ci fu data e non c'Ã¨.",
+    "price": "8.55",
+    "availability": "654",
+    "author": {
+      "id": "2",
+      "name": "Pirandello"
+    }
+  }
+]

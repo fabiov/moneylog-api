@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Service\Domain\Repository\BookRepository;
+use App\BookShop\Domain\Book\Service\Repository\BookRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

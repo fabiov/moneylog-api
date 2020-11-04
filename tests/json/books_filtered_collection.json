@@ -1,0 +1,14 @@
+[
+  {
+    "id": "2",
+    "title": "Gli arancini di Montalbano",
+    "isbn": "9788838938511",
+    "description": "Venti racconti si dispiegano l'un dietro l'altro.",
+    "price": "11.25",
+    "availability": "251",
+    "author": {
+      "id": "1",
+      "name": "Camilleri"
+    }
+  }
+]

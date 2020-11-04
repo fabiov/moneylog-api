@@ -30,3 +30,6 @@ services:
         decorates: 'api_platform.swagger.normalizer.documentation'
         arguments: ['@App\Swagger\SwaggerDecorator.inner']
         autoconfigure: false
+        
+    App\Service\Domain\Repository\BookRepository:
+        arguments: [ '@doctrine.orm.entity_manager' ]

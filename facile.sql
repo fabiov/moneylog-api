@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS book;
 CREATE TABLE `book` (
     `id` int PRIMARY KEY AUTO_INCREMENT,
     `author_id` int NOT NULL,
-    `name` varchar(255) NOT NULL,
+    `title` varchar(255) NOT NULL,
     `isbn` varchar(255) UNIQUE NOT NULL,
     `description` text NOT NULL,
     `price` double NOT NULL,

@@ -2,6 +2,9 @@ ARG PHP_VERSION=7.3
 
 FROM php:${PHP_VERSION}-fpm AS api_php
 
+ENV TZ=Europe/Rome
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apt-get update
 RUN apt-get install -y git net-tools openssh-server supervisor unzip vim acl rsync libpq-dev \
     && docker-php-ext-install pdo pdo_mysql
